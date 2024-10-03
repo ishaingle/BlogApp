@@ -1,0 +1,18 @@
+<h1>Edit Post</h1>
+<%= form_with(model: @post, local: true) do |form|%>
+	<div>
+		<label>Title:</label>
+		<%= form.text_field :title%>
+	</div>
+
+	<div>
+		<label>Body:</label>
+		<%= form.text_area :body%>
+	</div>
+
+	<div>
+		<%= form.submit "Update Post"%>
+	</div>
+<%end%>
+
+<a href="<%= post_path(@post)%>">Back to post</a>

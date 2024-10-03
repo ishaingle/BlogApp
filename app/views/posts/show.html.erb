@@ -1,0 +1,29 @@
+<h1><%= @post.title %></h1>
+<p><%= @post.body %></p>
+
+<%if user_signed_in? && @post.user == current_user%>
+	<%= link_to "Edit Post", edit_post_path(@post), class: "btn btn-warning"%>
+	<%= link_to "Delete Post", post_path(@post), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-danger"%>
+<%end%>
+
+<h3>Comments</h3>
+	<% @post.comments.each do |comment|%>
+		<%= comment.user.email%> : <%= comment.body%>
+		<%if user_signed_in? && comment.user == current_user %>
+			<%= link_to "Delete comment", post_comment_path(@post, comment), method: :delete%>
+		<%end%>
+	<%end%>
+<ul>
+
+<% if user_signed_in? %>
+	<h3>Add a Comment</h3>
+	<%= form_with(model: [@post, @post.comments.build], local: true) do |form|%>
+		<div class="form-group">
+			<%= form.label :body%>
+			<%= form.text_area :body, class: "form-control"%>
+		</div>
+		<div class="form-group">
+			<%= form.submit "Post comment", class: "btn btn-primary"%>
+		</div>
+	<%end%>
+<%end%>
